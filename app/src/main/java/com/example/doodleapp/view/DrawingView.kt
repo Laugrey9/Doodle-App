@@ -14,6 +14,7 @@ class DrawingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
     private var drawCanvas: Canvas? = null
     private var canvasBitmap: Bitmap? = null
 
+    private var brushColor: Int = Color.BLACK // ✅ guardamos el color actual del pincel
     var isEraserOn = false
 
     init {
@@ -21,7 +22,7 @@ class DrawingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
     }
 
     private fun setupPaint() {
-        drawPaint.color = Color.BLACK
+        drawPaint.color = brushColor
         drawPaint.isAntiAlias = true
         drawPaint.strokeWidth = 10f
         drawPaint.style = Paint.Style.STROKE
@@ -37,11 +38,7 @@ class DrawingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawBitmap(canvasBitmap!!, 0f, 0f, canvasPaint)
-
-        // Mostrar preview del trazo solo si NO está el borrador activado
-        if (!isEraserOn) {
-            canvas.drawPath(drawPath, drawPaint)
-        }
+        canvas.drawPath(drawPath, drawPaint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -73,7 +70,18 @@ class DrawingView(context: Context, attrs: AttributeSet?) : View(context, attrs)
             drawPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         } else {
             drawPaint.xfermode = null
-            drawPaint.color = Color.BLACK
+            drawPaint.color = brushColor // ✅ restauramos el último color usado
+        }
+    }
+
+    fun setBrushSize(size: Float) {
+        drawPaint.strokeWidth = size
+    }
+
+    fun setBrushColor(color: Int) {
+        brushColor = color           // ✅ guardamos el nuevo color
+        if (!isEraserOn) {
+            drawPaint.color = color // Solo cambiamos si no está el borrador activo
         }
     }
 }

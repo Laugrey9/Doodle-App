@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <com.example.doodleapp.view.DrawingView
         android:id="@+id/drawingView"
@@ -12,12 +13,24 @@
 
     <LinearLayout
         android:id="@+id/toolsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        android:background="#EEEEEE"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:layout_gravity="bottom|center_vertical"
+        android:padding="20dp">
+
+        <!-- SeekBar para tamaño del pincel -->
+
+        <SeekBar
+            android:id="@+id/seekBarSize"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:max="100"
+            android:progress="10" />
 
         <Button
             android:id="@+id/btnBrush"
@@ -32,4 +45,36 @@
             android:text="Borrador" />
     </LinearLayout>
 
-</RelativeLayout>
+    <com.skydoves.colorpickerview.ColorPickerView
+        android:id="@+id/colorPickerView"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="top|right"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/color_gradient" />
+</LinearLayout>
+
+    <View
+        android:id="@+id/colorPreview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="55dp"
+        android:layout_marginLeft="20dp"
+        android:background="#000" />
+
+</FrameLayout>
